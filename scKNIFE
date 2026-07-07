@@ -1,0 +1,70 @@
+import numpy as np
+
+# R_g maps genes to nodes in unified graph
+
+def NMF(X: np.ndarray, r: int, iter: int):
+    # generate matrices of 1's with dimension N*r, r*p:
+    W = np.ones((len(X), r), dtype=float)
+    H = np.ones((r, len(X[0])), dtype=float)
+
+    for _ in range(iter):
+        # update values of W and K:
+        WH = np.dot(W, H)
+        for i in range(len(W)):
+            for k in range(len(W[0])):
+                pos, neg = 0, 0
+                for j in range(len(X[0])):
+                    pos += H[k][j] * X[i][j] / WH[i][j]
+                    neg += H[k][j]
+                W[i][k] = W[i][k] * pos / neg
+
+        WH = np.dot(W, H)
+        for k in range(len(H)):
+            for j in range(len(H[0])):
+                pos, neg = 0, 0
+                for i in range(len(X)):
+                    pos += W[i][k] * X[i][j] / WH[i][j]
+                    neg += W[i][k]
+                H[k][j] = H[k][j] * pos / neg
+    return W, H
+
+
+def scKNIFE(X: np.ndarray, R_g: np.ndarray, D: np.ndarray, A: np.ndarray,
+             r: int, lam: float, beta_W: float, beta_H: float):
+    L = D - A
+
+    #DONE: implement the base NMF algorithm to 
+    # determine the values of labeled nodes in W and H
+    # 07/06/2026: 
+    # read ESL book pages, derived NMF algorithm in P-14.23, 
+    # proof from monotone convergence
+    # implemented NMF
+    W_f, H = NMF(X, r, 100)
+    
+    # 07/07/2026:
+    # (L_uu + \epsilon I) W_u = - L_uf W_f
+    # minimizes the Laplacian quadratic form from
+    # block matrix [W_u W_f]^T
+    #DONE: implement the interpolation
+    i_u = len(L) - len(W_f)
+    W_u = np.linalg.solve(L[i_u, :i_u] + np.eye(i_u) * 1e-6, 
+                          np.dot(-L[:-i_u, i_u:], W_f))
+    W = np.vstack(W_u, W_f)
+
+    #DONE: implement the optimization 
+    # with graph and regularization constraints
+    for _ in range(100):
+        pos = np.linalg.multi_dot(R_g.T, X, H.T) + A @ W * lam
+        neg = np.linalg.multi_dot(R_g.T, R_g, W, H, H.T) 
+        + D @ W * lam + beta_W + 1e-9
+        W *= pos / neg
+        
+        pos = np.linalg.multi_dot(W.T, R_g.T, X)
+        R_gW = R_g @ W
+        neg = np.linalg.multi_dot(R_gW.T, R_gW, H) + beta_H + 1e-9
+        H *= pos / neg
+
+    #TODO: implement the graph construction
+    #TODO: think about integration of spatial structure
+
+    return
