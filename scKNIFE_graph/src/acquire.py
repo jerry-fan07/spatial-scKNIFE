@@ -1,6 +1,7 @@
 import requests
 import hashlib
 import pathlib
+import json
 from datetime import datetime
 
 # source data schema
@@ -57,12 +58,18 @@ def manifest(source: Source):
     path = pathlib.Path(RAW_DIR + source.raw_path)
     if not path.is_file():
         raise FileNotFoundError
+    
+    # write source metadata to json:
+    with open(RAW_DIR + "MANIFEST.json", "w") as f:
+        json.dump(MANIFEST, f, indent=4)
+
     # does not replace if sha256 data exists
     if source_dict["sha256"]:
         return
     with path.open("rb") as f:
         sha256_hash = hashlib.file_digest(f, "sha256")
     source_dict["sha256"] = sha256_hash.hexdigest()
+    
 
 def acquire():
     for source in SOURCES:
@@ -81,4 +88,5 @@ def acquire():
         else:
             print(f"{source.name} has no http link")
 
-print(MANIFEST)
+
+acquire()
