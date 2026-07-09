@@ -2,7 +2,8 @@ import pandas as pd
 import pathlib
 import json
 
-SEP_DIR = "/Users/jerryfan/Documents/Github/research2026/spatial-scKNIFE/scKNIFE_graph/data/separated/"
+SEP_DIR = "/Users/jerryfan/Documents/Github/research2026/" \
+"spatial-scKNIFE/scKNIFE_graph/data/separated/"
 
 
 
@@ -15,10 +16,14 @@ def compile_list(edge_list : list, file_name : str):
     
     """
     df = pd.DataFrame(edge_list, 
-                      columns=["src_id", "dst_id", "edge_type", "source"])
+                      columns=["src_id",
+                                "dst_id",
+                                "edge_type",
+                                "source"])
     df.to_csv(SEP_DIR + file_name, sep='\t', index=False)
     return df
 
+# thinking about doing more to minimize duplication
 def normalize(name: str) -> str:
     return name.lower().strip().replace(' ', "_")
 
