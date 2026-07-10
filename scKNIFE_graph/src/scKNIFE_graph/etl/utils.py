@@ -1,7 +1,7 @@
 import pandas as pd
 import pathlib
 import json
-from config import SEP_DIR
+from ..config import SEP_DIR
 
 
 
@@ -47,7 +47,7 @@ def save_map(map: dict[str, int], name):
         name: "*.json"
     Save node to ID dictionary as JSON file
     """
-    with open(SEP_DIR + name, "w") as f:
+    with open(SEP_DIR / name, "w") as f:
         json.dump(map, f, indent=4)
 
 def add_node(node:str, map:dict[str, int]):

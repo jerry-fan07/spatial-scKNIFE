@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-import utils
-from config import RAW_DIR, SEP_DIR
+from . import utils
+from ..config import RAW_DIR, SEP_DIR
 
 
 gaf_columns = [

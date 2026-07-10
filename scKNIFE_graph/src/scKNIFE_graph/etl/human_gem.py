@@ -1,7 +1,7 @@
 import pandas as pd
 import libsbml as sbml
-import utils
-from config import RAW_DIR
+from . import utils
+from ..config import RAW_DIR
 
 def extract() -> list[tuple[str, str, str, str]]:
     """

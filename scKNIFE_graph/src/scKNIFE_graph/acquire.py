@@ -17,7 +17,7 @@ import hashlib
 import pathlib
 import json
 from datetime import datetime
-from config import RAW_DIR
+from .config import RAW_DIR
 
 # source data schema
 class Source:
