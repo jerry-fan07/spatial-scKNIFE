@@ -37,7 +37,7 @@ def extract() -> pd.DataFrame:
     edge_list = []
     df = pd.read_csv(RAW_DIR / "HUMAN-uniprot.gaf.gz",
                       sep="\t", comment="!", 
-                      names=gaf_columns, header=None)
+                      names=gaf_columns, header=None, dtype=str)
     gene_term_df = df.loc[
         df["Aspect"] == "P",
           ["Gene", "GO_ID"]]
@@ -61,3 +61,5 @@ def extract() -> pd.DataFrame:
     
     utils.save_map(NODE_MAP, "go_NM.json")
     return gene_term_df
+
+extract()

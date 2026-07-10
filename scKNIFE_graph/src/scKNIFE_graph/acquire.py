@@ -74,7 +74,12 @@ SOURCES = [
     Source("go",
            "https://current.geneontology.org/annotations/gaf/HUMAN-uniprot.gaf.gz",
            "http",
-           "HUMAN-uniprot.gaf.gz")
+           "HUMAN-uniprot.gaf.gz"),
+    Source("reactome",
+           "https://download.reactome.org/97/Ensembl2Reactome_All_Levels.txt",
+           "http",
+           "Ensembl2Reactome_ALL_Levels.txt"
+           )
 ]
 
 def manifest(source: Source, sha256_hash: str = ""):
@@ -154,4 +159,4 @@ def acquire(src_index: list[int]):
 
 # check it is run by python -m scKNIFE_graph/acquire.py
 if __name__ == "__main__":
-    acquire(src_index=[1])
+    acquire(src_index=[2])

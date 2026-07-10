@@ -8,7 +8,7 @@
     "go": {
         "url": "https://current.geneontology.org/annotations/gaf/HUMAN-uniprot.gaf.gz",
         "raw_path": "HUMAN-uniprot.gaf.gz",
-        "timestamp": "2026-07-10 15:04:36",
+        "timestamp": "2026-07-10 15:32:41",
         "sha256": "258f6ea163375c036929478c400f25bf32e6d83df547cc4b864dfb4ec20c1ffb"
     }
 }
