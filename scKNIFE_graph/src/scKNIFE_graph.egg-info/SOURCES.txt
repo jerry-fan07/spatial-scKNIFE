@@ -1,0 +1,11 @@
+GRAPH.md
+pyproject.toml
+requirements.txt
+src/etl/go.py
+src/etl/human_gem.py
+src/etl/utils.py
+src/scKNIFE_graph.egg-info/PKG-INFO
+src/scKNIFE_graph.egg-info/SOURCES.txt
+src/scKNIFE_graph.egg-info/dependency_links.txt
+src/scKNIFE_graph.egg-info/requires.txt
+src/scKNIFE_graph.egg-info/top_level.txt

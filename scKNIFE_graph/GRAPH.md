@@ -17,9 +17,14 @@ The raw data of edges from all of the sources are taken one by one in the format
 - Drawback is the issue of not having clean and separated pipelines for each dataset
 
 **Implementation Notes/Issues:**
-- *Human-GEM*: https://sbml.org/software/libsbml/5.18.0/docs/formatted/python-api/index.html
+- *Human-GEM*:
+  LIBSBML: https://sbml.org/software/libsbml/5.18.0/docs/formatted/python-api/index.html
   - Gene-reaction exists already, do we need gene-metabolite if reaction is already linked to the metabolites?
     - paper: “To improve traversability between expression-defined genes and metabolite space"
     - Should just solve this problem by incorporating weighted edges to the graph, this is doing essentially the same thing $(f_i - f_j)^2 + (f_j - f_k)^2 + (f_i - f_k)^2 = 2(f_i^2+f_j^2+f_k^2 - f_if_j-f_if_k-f_jf_k)$ 
   - Stoichiometric data should be used, and in addition, for `FbcAssociation` nodes, distinguish between `FbcAnd` versus `FbcOr`
   - Thinking about using fuzzy word matching algorithm or compute words into vectors and calculating distances to check for duplication within pathway names and currently only have normalize function -> `.lower().strip().replace(“ “, “_")`
+- *GO Biological Process*:
+  - Why do we not use GO Molecular Function (gene product activity) and GO Cellular Component (cellular location)?
+  - Should use evidence code filtering (EXP, IDA, IMP) -> (IBA, IRD) -> (ISS, ISO) -> (TAS, NAS) -> (IEA) and can implement them for different edge weights in the graph later if used.
+- What 

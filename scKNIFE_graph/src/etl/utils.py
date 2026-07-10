@@ -5,7 +5,8 @@ from config import SEP_DIR
 
 
 
-def compile_list(edge_list : list, file_name : str):
+def compile_list(edge_list : list, 
+                 file_name : str):
     """
     Returns a pd.DataFrame object
     Creates a .tsv file from the DF
@@ -14,16 +15,18 @@ def compile_list(edge_list : list, file_name : str):
     
     """
     df = pd.DataFrame(edge_list, 
-                      columns=["src_id",
-                                "dst_id",
-                                "edge_type",
-                                "source"])
+                    columns=["src_id",
+                            "dst_id",
+                            "edge_type",
+                            "source"])
     df.to_csv(SEP_DIR / file_name, sep='\t', index=False)
     return df
 
 # thinking about doing more to minimize duplication
 def normalize(name: str) -> str:
     return name.lower().strip().replace(' ', "_")
+
+#TODO: separated data NODE_MAP changes
 
 def get_map(name: str) -> dict[str, int]:
     """
