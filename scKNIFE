@@ -49,13 +49,13 @@ def scKNIFE(X: np.ndarray, R_g: np.ndarray, D: np.ndarray, A: np.ndarray,
     i_u = len(L) - len(W_f)
     W_u = np.linalg.solve(L[i_u, :i_u] + np.eye(i_u) * 1e-6, 
                           np.dot(-L[:-i_u, i_u:], W_f))
-    W = np.vstack(W_u, W_f)
+    W = np.vstack(W_u, W_f) # type: ignore
 
     #DONE: implement the optimization 
     # with graph and regularization constraints
     for _ in range(100):
         pos = np.linalg.multi_dot(R_g.T, X, H.T) + A @ W * lam
-        neg = np.linalg.multi_dot(R_g.T, R_g, W, H, H.T) 
+        neg = np.linalg.multi_dot(R_g.T, R_g, W, H, H.T) \
         + D @ W * lam + beta_W + 1e-9
         W *= pos / neg
         
