@@ -16,6 +16,10 @@ env/
 *.hdf5
 *.loom
 *.h5ad
+*.tsv
+*.xml
+*.gz
+Ensembl2Reactome_ALL_Levels.txt
 
 # Jupyter
 .ipynb_checkpoints/
