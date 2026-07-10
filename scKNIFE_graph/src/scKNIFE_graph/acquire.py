@@ -77,10 +77,7 @@ SOURCES = [
            "HUMAN-uniprot.gaf.gz")
 ]
 
-# dict of dicts: source acquisition metadata
-MANIFEST = {"human_gem": {}, "go": {}}
-
-def manifest(source: Source):
+def manifest(source: Source, sha256_hash: str = ""):
     """ Writes an entry for the given source in MANIFEST.json
 
     Args:
@@ -88,24 +85,38 @@ def manifest(source: Source):
     Raises:
         FileNotFoundError: wrong file path
     """
+    # retrieve JSON
+    # (dict of dicts: source acquisition metadata)
+    manifest_path = pathlib.Path(RAW_DIR / "MANIFEST.json")
+    if manifest_path.is_file():
+        with open(manifest_path, "r") as manifest_file:
+            MANIFEST = json.load(manifest_file)
+    else:
+        MANIFEST = {"human_gem": {}, "go": {}}
+    
+    # update JSON file
     source_dict = MANIFEST[source.name]
     source_dict["url"] = source.url
     source_dict["raw_path"] = source.raw_path
     source_dict["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    path = pathlib.Path(RAW_DIR / source.raw_path)
-    if not path.is_file():
+
+    raw_path = pathlib.Path(RAW_DIR / source.raw_path)
+    # raise error if file does not exist
+    if not raw_path.is_file():
         raise FileNotFoundError
-    
-    # write source metadata to json:
+
+    # compute file hash
+    # does not replace if sha256 data exists
+    if sha256_hash:
+        source_dict["sha256"] = sha256_hash
+    else:
+        with raw_path.open("rb") as f:
+            digest = hashlib.file_digest(f, "sha256")
+        source_dict["sha256"] = digest.hexdigest()
+
+    # save source metadata to json:
     with open(RAW_DIR / "MANIFEST.json", "w") as f:
         json.dump(MANIFEST, f, indent=4)
-
-    # does not replace if sha256 data exists
-    if source_dict["sha256"]:
-        return
-    with path.open("rb") as f:
-        sha256_hash = hashlib.file_digest(f, "sha256")
-    source_dict["sha256"] = sha256_hash.hexdigest()
     
 
 def acquire(src_index: list[int]):
@@ -133,13 +144,14 @@ def acquire(src_index: list[int]):
                         if chunk: # filter keep-alive empty chunks
                             f.write(chunk)
                             sha256_hash.update(chunk)
-            MANIFEST[source.name]["sha256"] = sha256_hash.hexdigest()
-            manifest(source)
+            manifest(source, sha256_hash.hexdigest())
         else:
             print(f"{source.name} has no http link")
 
 
-acquire(src_index=[1])
-
 #TODO: write a method that records history and allows retraction of a data pull
 # maybe Git is sufficient
+
+# check it is run by python -m scKNIFE_graph/acquire.py
+if __name__ == "__main__":
+    acquire(src_index=[1])

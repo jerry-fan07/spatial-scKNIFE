@@ -1,9 +1,14 @@
 {
-    "human_gem": {},
+    "human_gem": {
+        "url": "https://raw.githubusercontent.com/SysBioChalmers/Human-GEM/refs/heads/main/model/Human-GEM.xml",
+        "raw_path": "Human-Gem.xml",
+        "timestamp": "2026-07-10 14:55:45",
+        "sha256": "cc5a4383c6116b0c91f4db089cc640f29aec7e840249b573b74d3792c9ca4a7a"
+    },
     "go": {
-        "sha256": "258f6ea163375c036929478c400f25bf32e6d83df547cc4b864dfb4ec20c1ffb",
         "url": "https://current.geneontology.org/annotations/gaf/HUMAN-uniprot.gaf.gz",
         "raw_path": "HUMAN-uniprot.gaf.gz",
-        "timestamp": "2026-07-10 10:31:42"
+        "timestamp": "2026-07-10 15:04:36",
+        "sha256": "258f6ea163375c036929478c400f25bf32e6d83df547cc4b864dfb4ec20c1ffb"
     }
 }
