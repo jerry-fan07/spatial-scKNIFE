@@ -19,7 +19,7 @@ env/
 *.tsv
 *.xml
 *.gz
-Ensembl2Reactome_ALL_Levels.txt
+data/raw/Ensembl2Reactome_ALL_Levels.txt
 
 # Jupyter
 .ipynb_checkpoints/
