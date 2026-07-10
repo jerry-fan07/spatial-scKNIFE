@@ -1,9 +1,7 @@
 import pandas as pd
 import pathlib
 import json
-
-SEP_DIR = "/Users/jerryfan/Documents/Github/research2026/" \
-"spatial-scKNIFE/scKNIFE_graph/data/separated/"
+from config import SEP_DIR
 
 
 
@@ -20,7 +18,7 @@ def compile_list(edge_list : list, file_name : str):
                                 "dst_id",
                                 "edge_type",
                                 "source"])
-    df.to_csv(SEP_DIR + file_name, sep='\t', index=False)
+    df.to_csv(SEP_DIR / file_name, sep='\t', index=False)
     return df
 
 # thinking about doing more to minimize duplication
@@ -33,10 +31,10 @@ def get_map(name: str) -> dict[str, int]:
         name: "*.json"
     Open JSON file as node to ID dictionary
     """
-    file = pathlib.Path(SEP_DIR + name)
+    file = pathlib.Path(SEP_DIR / name)
     if not file.is_file():
         return {}
-    with open(SEP_DIR + name, "r") as f:
+    with open(SEP_DIR / name, "r") as f:
         return json.load(f)
     
 def save_map(map: dict[str, int], name):

@@ -1,9 +1,7 @@
 import pandas as pd
 import libsbml as sbml
 import utils
-
-RAW_DIR = "/Users/jerryfan/Documents/Github/" \
-"research2026/spatial-scKNIFE/scKNIFE_graph/data/raw/"
+from config import RAW_DIR
 
 def extract() -> list[tuple[str, str, str, str]]:
     """
@@ -16,7 +14,7 @@ def extract() -> list[tuple[str, str, str, str]]:
     NODE_MAP = utils.get_map("human_gem_NM.json")
     reader = sbml.SBMLReader()
     
-    hg_data = reader.readSBML(RAW_DIR + "Human-Gem.xml")
+    hg_data = reader.readSBML(RAW_DIR / "Human-Gem.xml")
     model = hg_data.getModel()
     fbc_model = model.getPlugin("fbc")
     edge_list = []
