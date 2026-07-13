@@ -40,5 +40,11 @@
         "raw_path": "CellChatDB.human.rda",
         "timestamp": "2026-07-13 15:05:08",
         "sha256": "582e99db2bb1b1e05c0364553893d804952bd007fef870720a9cc659a7bd3ad8"
+    },
+    "PanglaoDB": {
+        "url": "https://panglaodb.se/markers/PanglaoDB_markers_27_Mar_2020.tsv.gz",
+        "raw_path": "PanglaoDB.tsv.gz",
+        "timestamp": "2026-07-13 17:22:42",
+        "sha256": "6779952ad40aa5a124de7bd0e18975c6630bd6006d6b3ef210a916caaa6b53c9"
     }
 }

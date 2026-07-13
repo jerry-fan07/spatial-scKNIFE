@@ -20,7 +20,14 @@ import os
 from datetime import datetime
 from .config import RAW_DIR
 
-# source data schema
+# some sources (PanglaoDB) reject requests without 
+# browser-like User-Agent header
+HEADERS = {
+    "User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/124.0 Safari/537.36")
+}
+
 class Source:
     """ Schema for acquiring data from each source
 
@@ -107,6 +114,12 @@ SOURCES = [
     Source("cellchat",
            "https://github.com/jinworks/CellChat/raw/refs/heads/main/data/CellChatDB.human.rda",
            "http"
+           ),
+    # 7
+    Source("PanglaoDB",
+           "https://panglaodb.se/markers/PanglaoDB_markers_27_Mar_2020.tsv.gz",
+           "http",
+           "PanglaoDB.tsv.gz"
            )
 ]
 
@@ -172,7 +185,7 @@ def acquire(src_index: list[int]):
         sha256_hash = hashlib.sha256()
         if source.method == "http":
             # stream to process hash and write to memory
-            with requests.get(source.url, stream=True) as r:
+            with requests.get(source.url, stream=True, headers=HEADERS) as r:
                 r.raise_for_status() # checks for HTTP error
                 with open(RAW_DIR / source.raw_path, "wb") as f:
                     for chunk in r.iter_content(chunk_size = 65536):
@@ -205,4 +218,4 @@ def acquire(src_index: list[int]):
 
 # check it is run by python -m scKNIFE_graph/acquire.py
 if __name__ == "__main__":
-    acquire(src_index=[6])
+    acquire(src_index=[7])

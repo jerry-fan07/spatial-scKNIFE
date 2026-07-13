@@ -8,5 +8,13 @@
         }
     ],
     "python.defaultInterpreterPath": "${workspaceFolder}/venv/bin/python",
-    "python.analysis.extraPaths": ["${workspaceFolder}/venv/lib/python3.12/site-packages"]
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/venv/lib/python3.12/site-packages"
+    ],
+    "favorites.resources": [
+        {
+            "filePath": "src/scKNIFE_graph/acquire.py",
+            "group": "Default"
+        }
+    ]
 }
