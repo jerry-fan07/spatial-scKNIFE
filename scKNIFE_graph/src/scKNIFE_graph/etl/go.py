@@ -34,7 +34,6 @@ def extract() -> pd.DataFrame:
 
     """
     NODE_MAP = utils.get_map("go_NM.json") # dict
-    edge_list = []
     df = pd.read_csv(RAW_DIR / "HUMAN-uniprot.gaf.gz",
                       sep="\t", comment="!", 
                       names=gaf_columns, header=None, dtype=str)
@@ -42,24 +41,18 @@ def extract() -> pd.DataFrame:
         df["Aspect"] == "P",
           ["Gene", "GO_ID"]]
     
-    src_array = gene_term_df["Gene"].to_numpy()
-    dst_array = gene_term_df["GO_ID"].to_numpy()
-
-    for i in range(len(src_array)):
-        utils.add_node(src_array[i], NODE_MAP)
-        utils.add_node(dst_array[i], NODE_MAP)
-    
     gene_term_df["edge_type"] = "gene-term"
     gene_term_df["source"] = "go"
     gene_term_df = gene_term_df.rename(
         columns = {"Gene": "src_id", 
-                   "Aspect": "dst_id"})
+                   "GO_ID": "dst_id"})
 
 
     gene_term_df.to_csv(SEP_DIR / "go.tsv", 
                         sep = '\t', index=False)
     
-    utils.save_map(NODE_MAP, "go_NM.json")
+    utils.add_nodes(gene_term_df)
+
     return gene_term_df
 
 extract()

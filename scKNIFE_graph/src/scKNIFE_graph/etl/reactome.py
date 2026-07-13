@@ -21,24 +21,20 @@ def extract() -> pd.DataFrame:
                     usecols=[0, 3, 5], # choosing 3=Pathway_Name
                     header=None)
 
-    NODE_MAP = utils.get_map("reactome_NM.json")
     filter = (df["Species"] == "Homo sapiens") & df["ENSG_ID"].str.startswith("ENSG")
     df = (df[filter]).drop(columns=["Species"])
     df.iloc[:, 1] = df.iloc[:, 1].apply(utils.normalize)
-
-    for ensembl in df["ENSG_ID"].to_numpy(dtype=str): 
-        utils.add_node(ensembl, NODE_MAP)
-
-    # PATHWAY COLLISION WITH HUMAN-GEM
-    for pathway in df.iloc[:, 1].to_numpy(dtype=str): 
-        utils.add_node(utils.normalize(pathway), NODE_MAP)
     
+    # rename columns, compile to edge list
     df.columns = ["src_id", "dst_id"]
     df["edge_type"] = "gene-pathway" 
     df["source"] = "reactome"
+
     df.to_csv(SEP_DIR / "reactome.tsv", sep='\t', index=False)
 
-    utils.save_map(NODE_MAP, "reactome_NM.json")
+    utils.add_nodes(df)
+    # pathway collision with Human-Gem
+
     return df
 
 extract()

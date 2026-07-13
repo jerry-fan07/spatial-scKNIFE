@@ -10,5 +10,29 @@
         "raw_path": "HUMAN-uniprot.gaf.gz",
         "timestamp": "2026-07-10 15:32:41",
         "sha256": "258f6ea163375c036929478c400f25bf32e6d83df547cc4b864dfb4ec20c1ffb"
+    },
+    "reactome": {
+        "url": "https://download.reactome.org/97/Ensembl2Reactome_All_Levels.txt",
+        "raw_path": "Ensembl2Reactome_ALL_Levels.txt",
+        "timestamp": "2026-07-13 10:44:11",
+        "sha256": "5af5bdcccc3a58cf8742a5013057cc87dea7ea20eefdc675d82f94b3016e11b3"
+    },
+    "trrust": {
+        "url": "https://www.grnpedia.org/trrust/data/trrust_rawdata.human.tsv",
+        "raw_path": "trrust_rawdata.human.tsv",
+        "timestamp": "2026-07-13 10:44:13",
+        "sha256": "9b909319ccc8e36588b5a1bd3640e0dfba03936c6fc154cc4304d742bec11bed"
+    },
+    "cytopus": {
+        "url": "https://github.com/wallet-maker/cytopus/raw/refs/heads/main/cytopus/data/Cytopus_1.31nc_newcelltypes.txt",
+        "raw_path": "Cytopus_1.31nc.txt",
+        "timestamp": "2026-07-13 11:11:10",
+        "sha256": "ce7bfa90bb527791ff337e84ca394eecf5305662a636b706cd3de83da33d8b50"
+    },
+    "msigdb": {
+        "url": "https://www.gsea-msigdb.org/gsea/msigdb/download_file.jsp?filePath=/msigdb/release/2026.1.Hs/h.all.v2026.1.Hs.symbols.gmt",
+        "raw_path": "msigdb_hallmark.gmt",
+        "timestamp": "2026-07-13 13:24:41",
+        "sha256": "eecaf6dad908334ae885406ec72bdc0646d8917588ed7c219fac92fc5363f596"
     }
 }

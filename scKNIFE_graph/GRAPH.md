@@ -27,4 +27,11 @@ The raw data of edges from all of the sources are taken one by one in the format
 - *GO Biological Process*:
   - Why do we not use GO Molecular Function (gene product activity) and GO Cellular Component (cellular location)?
   - Should use evidence code filtering (EXP, IDA, IMP) -> (IBA, IRD) -> (ISS, ISO) -> (TAS, NAS) -> (IEA) and can implement them for different edge weights in the graph later if used.
-- What 
+- *Reactome*:
+  - Gene-pathway edges probably have a lot of collisions with gene-pathway edges in *Human-Gem*, and currently the genes are expressed in Ensembl ID format (decide to convert to gene codes or convert all to ENS id).
+
+- *Cytopus*:
+	- cellular processes, cellular identities
+    - Dependency pin of 1.3.4 pins the data from this version
+    - two versions of data: Cytopus_1.31nc_newcelltypes.txt is not used for graph (contains less entries), and we only pull from the database (this is also what the authors did)
+      

@@ -3,9 +3,9 @@ import libsbml as sbml
 from . import utils
 from ..config import RAW_DIR
 
-def extract() -> list[tuple[str, str, str, str]]:
+def extract() -> pd.DataFrame:
     """
-    Returns: list of edges in the form of tuple:
+    Returns: pd.DataFrame
     (src_id, dst_id, edge_type, source)
     
     Extracts raw SBML data from Human-Gem.xml file containing
@@ -90,7 +90,7 @@ def extract() -> list[tuple[str, str, str, str]]:
                           for m in metabolites]
         
     utils.save_map(NODE_MAP, "human_gem_NM.json")
-    return edge_list
+    # create pd.DataFrame and TSV
+    edge_list = utils.compile_list(edge_list)
 
-# create pd.DataFrame and TSV
-utils.compile_list(edge_list=extract(), file_name="human_gem.tsv")
+    return edge_list
