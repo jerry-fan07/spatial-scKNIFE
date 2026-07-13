@@ -102,6 +102,11 @@ SOURCES = [
            "https://www.gsea-msigdb.org/gsea/msigdb/download_file.jsp?filePath=/msigdb/release/2026.1.Hs/h.all.v2026.1.Hs.symbols.gmt",
            "http_msigdb",
            "msigdb_hallmark.gmt"
+           ),
+    # 6
+    Source("cellchat",
+           "https://github.com/jinworks/CellChat/raw/refs/heads/main/data/CellChatDB.human.rda",
+           "http"
            )
 ]
 
@@ -200,4 +205,4 @@ def acquire(src_index: list[int]):
 
 # check it is run by python -m scKNIFE_graph/acquire.py
 if __name__ == "__main__":
-    acquire(src_index=[5])
+    acquire(src_index=[6])

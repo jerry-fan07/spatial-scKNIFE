@@ -34,5 +34,11 @@
         "raw_path": "msigdb_hallmark.gmt",
         "timestamp": "2026-07-13 13:24:41",
         "sha256": "eecaf6dad908334ae885406ec72bdc0646d8917588ed7c219fac92fc5363f596"
+    },
+    "cellchat": {
+        "url": "https://github.com/jinworks/CellChat/raw/refs/heads/main/data/CellChatDB.human.rda",
+        "raw_path": "CellChatDB.human.rda",
+        "timestamp": "2026-07-13 15:05:08",
+        "sha256": "582e99db2bb1b1e05c0364553893d804952bd007fef870720a9cc659a7bd3ad8"
     }
 }
