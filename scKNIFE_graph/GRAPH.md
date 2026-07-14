@@ -25,6 +25,10 @@ The raw data of edges from all of the sources are taken one by one in the format
   - Stoichiometric data should be used, and in addition, for `FbcAssociation` nodes, distinguish between `FbcAnd` versus `FbcOr`
   - Thinking about using fuzzy word matching algorithm or compute words into vectors and calculating distances to check for duplication within pathway names and currently only have normalize function -> `.lower().strip().replace(“ “, “_")`
 - *GO Biological Process*:
+  Pulled HUMAN-uniprot.gaf.gz which is decompressed and read through the `pd.read_csv()` function. The columns of interest are `DB_Object_Symbol` (Gene), `GO_ID` (Molecular Function, Biological Process, or Cellular Component), `Aspect` which is filtered to “P” for Biological Process. This therefore maps genes to their biological processes, which are shared by many of them.
+From the paper: "To preserve comparability with default Slalom inference while keeping the analysis tractable at atlas scale, we applied a single pre-filter to this prior matrix and retained only gene sets with at least 85 represented genes."
+We then also find gene term sizes and filter for >= 85 in GO BP data as well, although this is not mentioned in the paper.
+
   - Why do we not use GO Molecular Function (gene product activity) and GO Cellular Component (cellular location)?
   - Should use evidence code filtering (EXP, IDA, IMP) -> (IBA, IRD) -> (ISS, ISO) -> (TAS, NAS) -> (IEA) and can implement them for different edge weights in the graph later if used.
 - *Reactome*:

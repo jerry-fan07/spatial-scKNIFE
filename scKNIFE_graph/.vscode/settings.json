@@ -15,6 +15,27 @@
         {
             "filePath": "src/scKNIFE_graph/acquire.py",
             "group": "Default"
+        },
+        {
+            "filePath": "src/scKNIFE_graph/etl/utils.py",
+            "group": "Default"
+        },
+        {
+            "filePath": "src/scKNIFE_graph/matrix.py",
+            "group": "Default"
+        },
+        {
+            "filePath": "src/scKNIFE_graph/merge.py",
+            "group": "Default"
+        },
+        {
+            "filePath": "src/scKNIFE_graph/graph.py",
+            "group": "Default"
         }
-    ]
+    ],
+    "python.testing.pytestArgs": [
+        "src"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }

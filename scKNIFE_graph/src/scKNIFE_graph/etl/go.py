@@ -33,13 +33,19 @@ def extract() -> pd.DataFrame:
         DataFrame of src_id, dst_id, edge_type, source
 
     """
-    NODE_MAP = utils.get_map("go_NM.json") # dict
+
     df = pd.read_csv(RAW_DIR / "HUMAN-uniprot.gaf.gz",
                       sep="\t", comment="!", 
                       names=gaf_columns, header=None, dtype=str)
+
     gene_term_df = df.loc[
-        df["Aspect"] == "P",
-          ["Gene", "GO_ID"]]
+        (df["Aspect"] == "P"),
+        ["Gene", "GO_ID"]]
+    
+    #term_size = gene_term_df.groupby("GO_ID")["Gene"].transform("nunique")
+    #gene_term_df = gene_term_df[term_size >= 85]
+    
+    
     
     gene_term_df["edge_type"] = "gene-term"
     gene_term_df["source"] = "go"

@@ -11,7 +11,6 @@ def extract() -> pd.DataFrame:
     Extracts raw SBML data from Human-Gem.xml file containing
     reaction data, using libsbml as a parser.
     """
-    NODE_MAP = utils.get_map("human_gem_NM.json")
     reader = sbml.SBMLReader()
     
     hg_data = reader.readSBML(RAW_DIR / "Human-Gem.xml")
@@ -34,7 +33,6 @@ def extract() -> pd.DataFrame:
     # --> edges acquired: gene-reaction, reaction-metabolite, gene-metabolite
     for i in range(model.getNumReactions()):
         reaction = model.getReaction(i)
-        utils.add_node(reaction.getId(), NODE_MAP)
 
         def collect_leaves(fbc_assoc: sbml.FbcAssociation) -> list[str]:
             """
@@ -61,36 +59,35 @@ def extract() -> pd.DataFrame:
         # gene-reaction edges
         for g in genes:
             gene = symbol_of[g]
-            utils.add_node(gene, NODE_MAP)
-            edge_list += [(gene, reaction.getId(), 
+            edge_list += [(gene, reaction.getId(),
                            "gene-reaction", "human_gem")]
 
         # reaction-metabolite edges
         # think about meaning of edges, adding in stoichiometric data later
         for p in range(reaction.getNumProducts()):
             prod = reaction.getProduct(p).getSpecies()
-            utils.add_node(prod, NODE_MAP)
             metabolites.append(prod)
             edge_list.append((prod, reaction.getId(),
                                "reaction-metabolite", "human_gem"))
         
         for r in range(reaction.getNumReactants()):
             react = reaction.getReactant(r).getSpecies()
-            utils.add_node(react, NODE_MAP)
             metabolites.append(react)
             edge_list.append((react, reaction.getId(), 
                               "reaction-metabolite", "human_gem")) 
 
         # gene-metabolite edges
         # ! note: gene - reaction already exists, do we need gene - metabolite?
-        # no need to update NODE_MAP
+        # duplicates exist here: deduplication occurring in graph construction
         for g in genes:
             gene = symbol_of[g]
-            edge_list += [(gene, m, "gene-metabolite", "human_gem") 
+            edge_list += [(gene, m, "gene-metabolite", "human_gem")
                           for m in metabolites]
-        
-    utils.save_map(NODE_MAP, "human_gem_NM.json")
-    # create pd.DataFrame and TSV
+
+    # compile_list writes human_gem.tsv and, via add_nodes, human_gem_NM.json
+    # (node map derived from the edges, includes pathway nodes)
     edge_list = utils.compile_list(edge_list)
 
     return edge_list
+
+extract()

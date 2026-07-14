@@ -2,6 +2,8 @@ import pandas as pd
 import inspect
 import pathlib
 import json
+import requests
+import time
 from ..config import SEP_DIR
 
 
@@ -60,11 +62,13 @@ def add_nodes(edge_list: pd.DataFrame, name: str = ""):
     map_name = pathlib.Path(inspect.stack()[1].filename).stem + "_NM.json"
     if name:
         map_name = name
-    NODE_MAP = get_map(map_name)
+    NODE_MAP = {}
     for src in edge_list["src_id"].to_numpy(dtype=str):
-        add_node(src, NODE_MAP)
+        if src not in NODE_MAP:
+            NODE_MAP[src] = len(NODE_MAP)
     for dst in edge_list["dst_id"].to_numpy(dtype=str):
-        add_node(dst, NODE_MAP)
+        if dst not in NODE_MAP:
+            NODE_MAP[dst] = len(NODE_MAP)
     save_map(NODE_MAP, map_name)
 
 
@@ -74,3 +78,17 @@ def add_node(node:str, map:dict[str, int]):
     """
     if node not in map:
         map[node] = len(map)
+
+def load_hgnc_map() -> dict[str, str]:
+    """Ensembl gene id -> HGNC symbol lookup (built by etl/hgnc.py)."""
+    file = pathlib.Path(SEP_DIR / "hgnc_map.json")
+    if not file.is_file():
+        return {}
+    with open(file, "r") as f:
+        return json.load(f)
+
+
+def canonicalize(ids: pd.Series, hgnc_map: dict[str, str]) -> pd.Series:
+    """Collapse different ids for the same gene onto one "canonical" node.
+    """
+    return ids.map(lambda x: hgnc_map.get(x, x))

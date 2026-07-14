@@ -120,7 +120,11 @@ SOURCES = [
            "https://panglaodb.se/markers/PanglaoDB_markers_27_Mar_2020.tsv.gz",
            "http",
            "PanglaoDB.tsv.gz"
-           )
+           ),
+    # 8 (Normalization)
+    Source("HGNC",
+           "https://storage.googleapis.com/public-download-files/hgnc/tsv/tsv/hgnc_complete_set.txt",
+           "http")
 ]
 
 def manifest(source: Source, sha256_hash: str = ""):
@@ -218,4 +222,4 @@ def acquire(src_index: list[int]):
 
 # check it is run by python -m scKNIFE_graph/acquire.py
 if __name__ == "__main__":
-    acquire(src_index=[7])
+    acquire(src_index=[8])
