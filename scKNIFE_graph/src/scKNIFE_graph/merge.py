@@ -10,24 +10,29 @@ import pandas as pd
 from .config import SEP_DIR, PRO_DIR
 from .etl import utils
 
-edge_files = [file for file in SEP_DIR.iterdir()
-              if file.is_file() and file.suffix == ".tsv"]
+def build_complete_map():
+    edge_files = [file for file in SEP_DIR.iterdir()
+                if file.is_file() and file.suffix == ".tsv"]
 
-hgnc_map = utils.load_hgnc_map()
+    hgnc_map = utils.load_hgnc_map()
 
-complete_map = {}
+    complete_map = {}
 
-for edge_file in edge_files:
-    df = pd.read_csv(edge_file, sep='\t', header=0)
-    for col in ("src_id", "dst_id"):
-        for node in utils.canonicalize(df[col], hgnc_map):
-            # this actually makes {source}_NM.json files obsolete
-            if node not in complete_map:
-                complete_map[node] = len(complete_map)
+    for edge_file in edge_files:
+        df = pd.read_csv(edge_file, sep='\t', header=0)
+        for col in ("src_id", "dst_id"):
+            for node in utils.canonicalize(df[col], hgnc_map):
+                # this actually makes {source}_NM.json files obsolete
+                if node not in complete_map:
+                    complete_map[node] = len(complete_map)
 
 
 
-with open(PRO_DIR / "complete_NM.json", "w") as f:
-    json.dump(complete_map, f, indent=4)
+    with open(PRO_DIR / "complete_NM.json", "w") as f:
+        json.dump(complete_map, f, indent=4)
 
-print(len(complete_map))
+    print(len(complete_map))
+    return complete_map
+
+if __name__ == "__main__":
+    build_complete_map()

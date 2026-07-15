@@ -5,7 +5,7 @@ import scipy.sparse as sp
 from .config import SEP_DIR, PRO_DIR
 from .etl import utils
 
-def build_matrix():
+def build_laplacian():
     edge_files = [file for file in SEP_DIR.iterdir()
                 if file.is_file() and file.suffix == ".tsv"]
 
@@ -57,4 +57,7 @@ def build_matrix():
 
     sp.save_npz(PRO_DIR / "laplacian.npz", L)
 
-    return L, D, A
+    return L
+
+if __name__ == "__main__":
+    build_laplacian()

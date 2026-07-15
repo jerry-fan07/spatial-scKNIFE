@@ -44,13 +44,13 @@
     "PanglaoDB": {
         "url": "https://panglaodb.se/markers/PanglaoDB_markers_27_Mar_2020.tsv.gz",
         "raw_path": "PanglaoDB.tsv.gz",
-        "timestamp": "2026-07-13 17:22:42",
+        "timestamp": "2026-07-15 11:07:42",
         "sha256": "6779952ad40aa5a124de7bd0e18975c6630bd6006d6b3ef210a916caaa6b53c9"
     },
     "HGNC": {
         "url": "https://storage.googleapis.com/public-download-files/hgnc/tsv/tsv/hgnc_complete_set.txt",
         "raw_path": "hgnc_complete_set.txt",
-        "timestamp": "2026-07-13 19:25:32",
-        "sha256": "da14949c593bb28e9c136a636a0704d8892658c3b054a01cbccc53002e8e47ac"
+        "timestamp": "2026-07-15 11:07:44",
+        "sha256": "c88939f5f3cdd845e2eefb49909d7a79f83275687d413367d06b38d6d4d35bef"
     }
 }
