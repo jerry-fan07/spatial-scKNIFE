@@ -124,6 +124,10 @@ SOURCES = [
     # 8 (Normalization)
     Source("HGNC",
            "https://storage.googleapis.com/public-download-files/hgnc/tsv/tsv/hgnc_complete_set.txt",
+           "http"),
+    # 9
+    Source("tabula",
+           "",
            "http")
 ]
 

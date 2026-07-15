@@ -7,7 +7,7 @@ import pandas as pd
 from . import utils
 from ..config import RAW_DIR, SEP_DIR
 
-def panglaoDB():
+def panglaoDB() -> pd.DataFrame:
     df = pd.read_csv(RAW_DIR / "PanglaoDB.tsv.gz",
                         sep='\t',
                         header=0)
@@ -20,12 +20,24 @@ def panglaoDB():
         "edge_type": "celltype-marker",
         "source": "panglao"
     })
-    df.to_csv(SEP_DIR / "panglao.tsv", sep='\t', index=False)
-    utils.add_nodes(df, "panglao_NM.json")
-
     return df
 
-panglaoDB()
+# filler function
+def TNBC() -> pd.DataFrame:
+    return pd.DataFrame()
+
+def extract():
+    df_list = []
+    for func in (panglaoDB, TNBC):
+        df_list.append(func())
+    df = pd.concat(df_list)
+
+    df.to_csv(SEP_DIR / "markers.tsv", sep='\t', index=False)
+    utils.add_nodes(df)
+    return df
+
+if __name__ == "__main__":
+    extract()
 
 
 
