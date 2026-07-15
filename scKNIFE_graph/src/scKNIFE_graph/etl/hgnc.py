@@ -14,6 +14,5 @@ def extract():
         hgnc_map[ens[i]] = code[i]
     with open(SEP_DIR / "hgnc_map.json", "w") as f:
         json.dump(hgnc_map, f, indent=4)
-
-if __name__ == "__main__": 
-    extract()
+if __name__ == "__main__":      
+  extract()

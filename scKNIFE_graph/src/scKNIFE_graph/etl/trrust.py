@@ -22,5 +22,5 @@ def extract() -> pd.DataFrame:
     df.to_csv(SEP_DIR / "trrust.tsv", sep="\t", index=False)
 
     return df
-
-extract()
+if __name__ == "__main__":   
+  extract()

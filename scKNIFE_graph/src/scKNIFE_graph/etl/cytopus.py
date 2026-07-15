@@ -23,5 +23,5 @@ def extract() -> pd.DataFrame:
                        "cytopus")
                       for gene in genes]
     return utils.compile_list(edge_list) # also saves the nodes
-
-extract()
+if __name__ == "__main__":
+    extract()

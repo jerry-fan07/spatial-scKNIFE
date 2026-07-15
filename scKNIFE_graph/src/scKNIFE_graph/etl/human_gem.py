@@ -90,4 +90,5 @@ def extract() -> pd.DataFrame:
 
     return edge_list
 
-extract()
+if __name__ == "__main__":   
+    extract()

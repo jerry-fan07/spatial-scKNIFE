@@ -36,8 +36,8 @@ def extract() -> pd.DataFrame:
     # pathway collision with Human-Gem
 
     return df
-
-extract()
+if __name__ == "__main__":   
+  extract()
 
 
 

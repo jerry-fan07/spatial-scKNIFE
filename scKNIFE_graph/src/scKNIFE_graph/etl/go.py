@@ -60,5 +60,5 @@ def extract() -> pd.DataFrame:
     utils.add_nodes(gene_term_df)
 
     return gene_term_df
-
-extract()
+if __name__ == "__main__":
+    extract()

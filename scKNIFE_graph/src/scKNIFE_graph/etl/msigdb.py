@@ -12,4 +12,5 @@ def extract() -> pd.DataFrame:
         ]
     return utils.compile_list(edge_list)
 
-extract()
+if __name__ == "__main__":
+    extract()
