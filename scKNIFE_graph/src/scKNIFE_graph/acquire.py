@@ -239,10 +239,6 @@ def acquire(src_index: list[int]):
             print(f"{source.name} has no http link - {source.method}")
             manifest(source)
 
-
-#TODO: write a method that records history and allows retraction of a data pull
-# maybe Git is sufficient
-
 # check it is run by python -m scKNIFE_graph/acquire.py
 if __name__ == "__main__":
     acquire(src_index=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9])

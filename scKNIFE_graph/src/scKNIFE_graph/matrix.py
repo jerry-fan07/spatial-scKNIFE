@@ -5,15 +5,39 @@ import scipy.sparse as sp
 from .config import SEP_DIR, PRO_DIR
 from .etl import utils
 
+
+
+def write_genes():
+    genes = []
+    with open(PRO_DIR / "genes.json", "w") as f:
+        json.dump(genes, f, indent=4)
+    
+def build_Rg():
+    complete_map = utils.load_complete_map() 
+    with open(PRO_DIR / "genes.json", "r") as f:
+        gene_list = json.load(f)
+    index = [complete_map[g] for g in gene_list]
+    Rg_len = len(index)
+
+    Rg = sp.coo_matrix(
+        (np.ones(Rg_len), (range(Rg_len), index)),
+        shape = (Rg_len, Rg_len),
+        dtype = int
+    ).tocsr()
+    sp.save_npz(PRO_DIR / "Rg_matrix.npz", Rg)
+    return Rg
+
 def build_laplacian():
+
+    # region pull map
     edge_files = [file for file in SEP_DIR.iterdir()
                 if file.is_file() and file.suffix == ".tsv"]
-
     with open(PRO_DIR / "complete_NM.json", "r") as f:
         complete_map = json.load(f)
-
     hgnc_map = utils.load_hgnc_map()
+    # endregion
 
+    # region build laplacian
     srcs = []
     dsts = []
     length = len(complete_map)
@@ -31,11 +55,15 @@ def build_laplacian():
         srcs.append(src.to_numpy(dtype=int))
         dsts.append(dst.to_numpy(dtype=int))
 
+    # symmetrizes the edge list
+    # so that the graph is undirected
     rows = np.concatenate(srcs + dsts)
     cols = np.concatenate(dsts + srcs)
 
     A = sp.coo_matrix(
-        (np.ones(len(rows)), (rows, cols)), shape=(length,length), dtype=int
+        (np.ones(len(rows)), (rows, cols)), 
+        shape=(length,length), 
+        dtype=int
     ).tocsr()
     A.data = np.ones_like(A.data, dtype=int)
 
@@ -50,14 +78,11 @@ def build_laplacian():
     d = np.asarray(A.sum(axis=1)).ravel()
     D = sp.diags(d, dtype=int)
     L = (D - A).tocsr()
-
-    sample: sp.csr_matrix = A[0:100, 0:100]
-    dense_cut = sample.toarray()
-    np.savetxt(PRO_DIR / "sample_adjMatrix.txt", dense_cut, fmt='%d', delimiter=' ')
+    # endregion
 
     sp.save_npz(PRO_DIR / "laplacian.npz", L)
-
     return L
 
 if __name__ == "__main__":
-    build_laplacian()
+    build_Rg()
+    #build_laplacian()

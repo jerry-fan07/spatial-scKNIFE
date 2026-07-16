@@ -4,7 +4,7 @@ import pathlib
 import json
 import requests
 import time
-from ..config import SEP_DIR
+from ..config import SEP_DIR, PRO_DIR
 
 
 
@@ -76,15 +76,24 @@ def add_nodes(edge_list: pd.DataFrame, name: str = ""):
 
 
 def add_node(node:str, map:dict[str, int]):
-    """
-    Add node to collective dict
+    """ Add node to collective dict
     """
     if node not in map:
         map[node] = len(map)
 
 def load_hgnc_map() -> dict[str, str]:
-    """Ensembl gene id -> HGNC symbol lookup (built by etl/hgnc.py)."""
+    """ Ensembl gene id to HGNC symbol lookup 
+    """
     file = pathlib.Path(SEP_DIR / "hgnc_map.json")
+    if not file.is_file():
+        return {}
+    with open(file, "r") as f:
+        return json.load(f)
+    
+def load_complete_map() -> dict[str, str]:
+    """ Get complete map of nodes
+    """
+    file = pathlib.Path(PRO_DIR / "complete_NM.json")
     if not file.is_file():
         return {}
     with open(file, "r") as f:
