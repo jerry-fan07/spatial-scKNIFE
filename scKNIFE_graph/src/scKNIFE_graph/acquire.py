@@ -38,8 +38,11 @@ class Source:
         raw_path: file path
         notes: notes if manual
     """
-    def __init__(self, name: str, url: str | None, method: str, 
-                 raw_path:str = None, notes: str | None = None):
+    def __init__(self, name: str, 
+                 url: str | None, 
+                 method: str, 
+                 raw_path:str = None, 
+                 notes: str | None = None):
         self.name = name
         self.method = method
         self.url = url
@@ -94,11 +97,13 @@ SOURCES = [
            "http",
            "Ensembl2Reactome_ALL_Levels.txt"
            ),
-    # 3
-    Source("trrust",
-           "https://www.grnpedia.org/trrust/data/trrust_rawdata.human.tsv",
-           "http"
-           ),
+    # # 3
+    # Source("trrust",
+    #        "https://www.grnpedia.org/trrust/data/trrust_rawdata.human.tsv",
+    #        "http"
+    #        ),
+    # GRNPEDIA.ORG DOWN SINCE ACCESSED JULY 16, 2026
+
     # 4
     Source("cytopus",
            None,
@@ -127,8 +132,16 @@ SOURCES = [
            "http"),
     # 9
     Source("tabula",
-           "",
-           "http")
+           None,
+           "manual",
+           None,
+           notes="22_markers folder"),
+    # 10
+    Source("marker_layer",
+           None,
+           "manual",
+           "Task_by_Gene.csv",
+           notes="Received from email")
 ]
 
 def manifest(source: Source, sha256_hash: str = ""):
@@ -156,6 +169,9 @@ def manifest(source: Source, sha256_hash: str = ""):
     source_dict["raw_path"] = source.raw_path
     source_dict["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+    if source.raw_path == None:
+        print(f"{source.name} raw path not specified.")
+        return
     raw_path = pathlib.Path(RAW_DIR / source.raw_path)
     # raise error if file does not exist
     if not raw_path.is_file():
@@ -173,6 +189,8 @@ def manifest(source: Source, sha256_hash: str = ""):
     # save source metadata to json:
     with open(RAW_DIR / "MANIFEST.json", "w") as f:
         json.dump(MANIFEST, f, indent=4)
+    
+    print(f"{source.name} acquired.")
     
 
 def acquire(src_index: list[int]):
@@ -218,7 +236,8 @@ def acquire(src_index: list[int]):
             manifest(source, sha256_hash.hexdigest())
 
         else:
-            print(f"{source.name} has no http link")
+            print(f"{source.name} has no http link - {source.method}")
+            manifest(source)
 
 
 #TODO: write a method that records history and allows retraction of a data pull
@@ -226,4 +245,4 @@ def acquire(src_index: list[int]):
 
 # check it is run by python -m scKNIFE_graph/acquire.py
 if __name__ == "__main__":
-    acquire(src_index=[8])
+    acquire(src_index=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9])

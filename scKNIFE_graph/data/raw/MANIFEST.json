@@ -2,19 +2,19 @@
     "human_gem": {
         "url": "https://raw.githubusercontent.com/SysBioChalmers/Human-GEM/refs/heads/main/model/Human-GEM.xml",
         "raw_path": "Human-Gem.xml",
-        "timestamp": "2026-07-10 14:55:45",
+        "timestamp": "2026-07-16 11:44:48",
         "sha256": "cc5a4383c6116b0c91f4db089cc640f29aec7e840249b573b74d3792c9ca4a7a"
     },
     "go": {
         "url": "https://current.geneontology.org/annotations/gaf/HUMAN-uniprot.gaf.gz",
         "raw_path": "HUMAN-uniprot.gaf.gz",
-        "timestamp": "2026-07-10 15:32:41",
+        "timestamp": "2026-07-16 11:44:49",
         "sha256": "258f6ea163375c036929478c400f25bf32e6d83df547cc4b864dfb4ec20c1ffb"
     },
     "reactome": {
         "url": "https://download.reactome.org/97/Ensembl2Reactome_All_Levels.txt",
         "raw_path": "Ensembl2Reactome_ALL_Levels.txt",
-        "timestamp": "2026-07-13 10:44:11",
+        "timestamp": "2026-07-16 11:45:09",
         "sha256": "5af5bdcccc3a58cf8742a5013057cc87dea7ea20eefdc675d82f94b3016e11b3"
     },
     "trrust": {
@@ -32,25 +32,25 @@
     "msigdb": {
         "url": "https://www.gsea-msigdb.org/gsea/msigdb/download_file.jsp?filePath=/msigdb/release/2026.1.Hs/h.all.v2026.1.Hs.symbols.gmt",
         "raw_path": "msigdb_hallmark.gmt",
-        "timestamp": "2026-07-13 13:24:41",
+        "timestamp": "2026-07-16 11:45:09",
         "sha256": "eecaf6dad908334ae885406ec72bdc0646d8917588ed7c219fac92fc5363f596"
     },
     "cellchat": {
         "url": "https://github.com/jinworks/CellChat/raw/refs/heads/main/data/CellChatDB.human.rda",
         "raw_path": "CellChatDB.human.rda",
-        "timestamp": "2026-07-13 15:05:08",
+        "timestamp": "2026-07-16 11:45:10",
         "sha256": "582e99db2bb1b1e05c0364553893d804952bd007fef870720a9cc659a7bd3ad8"
     },
     "PanglaoDB": {
         "url": "https://panglaodb.se/markers/PanglaoDB_markers_27_Mar_2020.tsv.gz",
         "raw_path": "PanglaoDB.tsv.gz",
-        "timestamp": "2026-07-15 11:07:42",
+        "timestamp": "2026-07-16 11:45:11",
         "sha256": "6779952ad40aa5a124de7bd0e18975c6630bd6006d6b3ef210a916caaa6b53c9"
     },
     "HGNC": {
         "url": "https://storage.googleapis.com/public-download-files/hgnc/tsv/tsv/hgnc_complete_set.txt",
         "raw_path": "hgnc_complete_set.txt",
-        "timestamp": "2026-07-15 11:07:44",
+        "timestamp": "2026-07-16 11:45:12",
         "sha256": "c88939f5f3cdd845e2eefb49909d7a79f83275687d413367d06b38d6d4d35bef"
     }
 }

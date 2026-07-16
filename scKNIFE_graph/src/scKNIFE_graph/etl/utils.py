@@ -30,7 +30,10 @@ def compile_list(edge_list : list, file_name: str = "") -> pd.DataFrame:
 
 # thinking about doing more to minimize duplication
 def normalize(name: str) -> str:
-    return name.lower().strip().replace(' ', "_")
+    return name.lower().strip().strip('"').replace(' ', "_")
+
+def gene_normalize(name: str) -> str:
+    return name.strip().strip('"').upper()
 
 def get_map(name: str) -> dict[str, int]:
     """

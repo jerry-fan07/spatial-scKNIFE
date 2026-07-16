@@ -10,7 +10,6 @@ warnings.filterwarnings("ignore",
 def extract():
     cc_data = rdata.read_rda(RAW_DIR / "CellChatDB.human.rda") # type = dict
 
-
     df: pd.DataFrame = cc_data["CellChatDB.human"]["interaction"] # type = pd.DataFrame
     df = df[df["annotation"] != "Non-protein Signaling"]
 
@@ -25,15 +24,15 @@ def extract():
     edge_list = edge_list[(edge_list["src_id"] != "") &
                           (edge_list["dst_id"] != "") &
                           (edge_list["src_id"] != edge_list["dst_id"])]
+    edge_list["src_id"] = [utils.gene_normalize(s) for s in edge_list["src_id"]]
+    edge_list["dst_id"] = [utils.gene_normalize(d) for d in edge_list["dst_id"]]
 
     edge_list["edge_type"] = "ligand-receptor"
     edge_list["source"] = "cellchat"
-    edge_list = edge_list.drop_duplicates(subset = ["src_id", "dst_id"])
 
     edge_list.to_csv(SEP_DIR / "cellchat.tsv", sep='\t', index=False)
 
     utils.add_nodes(edge_list)
-
     return edge_list
 
 if __name__ == "__main__":

@@ -1,19 +1,36 @@
 import argparse
 
-from .etl import hgnc, go, cellchat, human_gem, reactome, trrust, msigdb, markers
+from .etl import hgnc, go, cellchat, human_gem, reactome, trrust, msigdb, markers, tabula
 from . import acquire
 from . import merge, matrix
+import time
 
 def main(acquire_list: list[int]):
+    t = time.perf_counter()
     acquire.acquire(acquire_list)
+    print(f"{time.perf_counter()-t : .3f}")
+    t =time.perf_counter()
+    
     hgnc.extract()
-    for script in (go, cellchat, human_gem, reactome, trrust, msigdb): # (add markers)
+    for script in (go, 
+                   cellchat, 
+                   human_gem, 
+                   reactome, 
+                   trrust, 
+                   msigdb, 
+                   markers, 
+                   tabula):
         script.extract()
-
-    markers.panglaoDB() # TODO: delete later when marker finished
+        print(f"{time.perf_counter()-t : .3f}", script.__name__)
+        t =time.perf_counter()
 
     merge.build_complete_map()
+    print(f"{time.perf_counter()-t : .3f}", "merge")
+    t =time.perf_counter()
+
     matrix.build_laplacian()
+    print(f"{time.perf_counter()-t : .3f}", "build laplacian")
+    t =time.perf_counter()
     
 if __name__ == "__main__":
     source_labels = ", ".join(

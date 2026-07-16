@@ -30,8 +30,8 @@ def build_complete_map():
 
     with open(PRO_DIR / "complete_NM.json", "w") as f:
         json.dump(complete_map, f, indent=4)
-
-    print(len(complete_map))
+    print("Merge completed.")
+    print("Total Nodes:", len(complete_map))
     return complete_map
 
 if __name__ == "__main__":
